@@ -117,3 +117,23 @@ export class EmployeeUpdateInfo {
   @IsString()
   linkedinProfile: string;
 }
+
+export class TokenInput {
+  @IsString()
+  token: string;
+}
+
+export class ProjectInfo {
+  @IsString()
+  id: string;
+  @IsString()
+  projectName: string;
+  @IsString()
+  projectCity: string;
+  @IsString()
+  projectArea: number;
+  @IsString()
+  projectDuration: number;
+  @IsString()
+  projectEstimate: number;
+}

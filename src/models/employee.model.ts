@@ -19,7 +19,7 @@ export type employeeDocument = mongoose.Document & {
     {
       projectName: string;
       projectCity: string;
-      projectArea: string;
+      projectArea: number;
       projectDuration: number;
       projectEstimate: number;
     }
@@ -89,7 +89,7 @@ const employeeSchema = new mongoose.Schema<employeeDocument>(
           type: String,
         },
         projectArea: {
-          type: String,
+          type: Number,
         },
         projectDuration: {
           type: Number,
