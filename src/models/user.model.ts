@@ -7,6 +7,10 @@ export type userDocument = mongoose.Document & {
   email: string;
   password: string;
   city: string;
+  role: string;
+  isAccountVerified: boolean;
+  accountVerificationToken: string;
+  accountVerificationTokenExpires: Date;
   comparePassword: comparePasswordFunction;
 };
 
@@ -33,8 +37,27 @@ const userSchema = new mongoose.Schema<userDocument>(
       type: String,
       default: "NP",
     },
+    role: {
+      type: String,
+      default: "CUSTOMER",
+    },
+    isAccountVerified: {
+      type: Boolean,
+      default: false,
+    },
+    accountVerificationToken: {
+      type: String,
+      default: "",
+    },
+    accountVerificationTokenExpires: Date,
   },
   {
+    toJSON: {
+      virtuals: true,
+    },
+    toObject: {
+      virtuals: true,
+    },
     timestamps: true,
   }
 );

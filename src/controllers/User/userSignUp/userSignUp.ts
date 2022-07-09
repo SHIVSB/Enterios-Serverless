@@ -15,7 +15,6 @@ export const userSignUp = async (body: UserSignUpInput) => {
     user.lastName = body.lastName;
     user.email = body.email;
     user.password = body.password;
-    user.city = body.city;
     user.save();
 
   } catch (error) {

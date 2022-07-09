@@ -1,4 +1,11 @@
-import { IsString, IsBoolean, IsArray, IsDate } from "class-validator";
+import {
+  IsString,
+  IsBoolean,
+  IsArray,
+  IsDate,
+  isDateString,
+  IsDateString,
+} from "class-validator";
 
 export class UserSignUpInput {
   @IsString()
@@ -11,6 +18,14 @@ export class UserSignUpInput {
   password: string;
   @IsString()
   city: string;
+  @IsString()
+  role: string;
+  @IsBoolean()
+  isAccountVerified: boolean;
+  @IsString()
+  accountVerificationToken: string;
+  @IsDateString()
+  accountVerificationTokenExpires: Date;
 }
 
 export class UserSignInInput {
@@ -41,4 +56,9 @@ export class EmployeeSignUpInput {
   role: string;
   @IsString()
   linkedinProfile: string;
+}
+
+export class AddCityInput {
+  @IsString()
+  city: string;
 }
