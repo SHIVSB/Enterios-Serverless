@@ -58,6 +58,13 @@ export class EmployeeSignUpInput {
   linkedinProfile: string;
 }
 
+export class EmployeeSignInInput {
+  @IsString()
+  email: string;
+  @IsString()
+  password: string;
+}
+
 export class AddCityInput {
   @IsString()
   city: string;
