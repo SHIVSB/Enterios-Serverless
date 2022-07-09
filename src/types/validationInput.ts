@@ -69,3 +69,51 @@ export class AddCityInput {
   @IsString()
   city: string;
 }
+
+export class UserUpdateInfo {
+  @IsString()
+  id: string;
+  @IsString()
+  firstName: string;
+  @IsString()
+  lastName: string;
+  @IsString()
+  email: string;
+  @IsString()
+  password: string;
+  @IsString()
+  city: string;
+  @IsString()
+  role: string;
+  @IsBoolean()
+  isAccountVerified: boolean;
+  @IsString()
+  accountVerificationToken: string;
+  @IsDateString()
+  accountVerificationTokenExpires: Date;
+}
+
+export class EmployeeUpdateInfo {
+  @IsString()
+  id: string;
+  @IsString()
+  firstName: string;
+  @IsString()
+  lastName: string;
+  @IsString()
+  email: string;
+  @IsString()
+  password: string;
+  @IsString()
+  phone: number;
+  @IsString()
+  city: string;
+  @IsString()
+  profilePhoto: string;
+  @IsString()
+  bio: string;
+  @IsString()
+  role: string;
+  @IsString()
+  linkedinProfile: string;
+}
