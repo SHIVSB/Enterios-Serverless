@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "@azure/functions": "^3.0.0",
+    "@shelf/jest-mongodb": "^3.0.2",
     "@types/jest": "^28.1.4",
     "@types/node": "16.x",
     "jest": "^28.1.2",

@@ -5,4 +5,5 @@ module.exports = {
     "^.+\\.(ts|tsx)$": "ts-jest",
   },
   testTimeout: 60000,
+  preset: "@shelf/jest-mongodb",
 };
