@@ -137,3 +137,26 @@ export class ProjectInfo {
   @IsString()
   projectEstimate: number;
 }
+
+export class AdminSignUpInput {
+  @IsString()
+  firstName: string;
+  @IsString()
+  lastName: string;
+  @IsString()
+  email: string;
+  @IsString()
+  password: string;
+  @IsString()
+  phone: number;
+  @IsString()
+  city: string;
+  @IsString()
+  profilePhoto: string;
+  @IsString()
+  bio: string;
+  @IsString()
+  role: string;
+  @IsString()
+  linkedinProfile: string;
+}
