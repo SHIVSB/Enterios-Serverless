@@ -5,6 +5,8 @@ import {
   IsDate,
   isDateString,
   IsDateString,
+  IsObject,
+  IsNumber,
 } from "class-validator";
 
 export class UserSignUpInput {
@@ -159,4 +161,15 @@ export class AdminSignUpInput {
   role: string;
   @IsString()
   linkedinProfile: string;
+}
+
+export class CustomerProjectInput {
+  @IsObject()
+  customerId: object;
+  @IsString()
+  projectCity: string;
+  @IsNumber()
+  projectArea: number;
+  @IsString()
+  projectType: string;
 }

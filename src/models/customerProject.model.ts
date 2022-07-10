@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { projectConstants } from "../constants/projectConstants";
 
 export type customerProjectDocument = mongoose.Document & {
-  customerId: Array<object>;
+  customerId: object;
   projectCity: string;
   projectArea: number;
   projectType: string;
@@ -12,7 +12,7 @@ export type customerProjectDocument = mongoose.Document & {
   projectConfirmationStatus: string;
   projectAssigned: boolean;
   projectAssignee: object;
-  location: Array<number>;
+  location: object;
   projectCancelled: boolean;
   projectCompleted: boolean;
 };
@@ -20,65 +20,70 @@ export type customerProjectDocument = mongoose.Document & {
 const customerProjectSchema = new mongoose.Schema<customerProjectDocument>(
   {
     customerId: {
-      type: [
-        {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "user",
-        },
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
+      required: [true, "Customer Id is required || Login required"],
+    },
+    projectCity: {
+      type: String,
+      required: true,
+    },
+    projectArea: {
+      type: Number,
+      default: 0,
+    },
+    projectType: {
+      type: String,
+      required: [true, "Project type is required. Commercial || Residential"],
+      enum: [
+        projectConstants.type.residential,
+        projectConstants.type.commercial,
       ],
-      projectCity: {
-        type: String,
-        required: true,
-      },
-      projectArea: {
+    },
+    projectEstimate: {
+      type: Number,
+      default: 0,
+    },
+    projectDuration: {
+      type: Number,
+    },
+    projectName: {
+      type: String,
+    },
+    projectConfirmationStatus: {
+      type: String,
+      enum: [
+        projectConstants.projectStatus.underReview,
+        projectConstants.projectStatus.reviewSuccessfull,
+        projectConstants.projectStatus.projectConfirmed,
+        projectConstants.projectStatus.projectCancelled,
+      ],
+      default: projectConstants.projectStatus.underReview,
+    },
+    projectAssigned: {
+      type: Boolean,
+      default: false,
+    },
+    projectAssignee: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "employee",
+    },
+    location: {
+      latitude: {
         type: Number,
       },
-      projectType: {
-        type: String,
-        required: [true, "Project type is required. Commercial || Residential"],
-        enum: [
-          projectConstants.type.residential,
-          projectConstants.type.commercial,
-        ],
-      },
-      projectEstimate: {
+      longitude: {
         type: Number,
-      },
-      projectDuration: {
-        type: Number,
-      },
-      projectName: {
-        type: String,
-      },
-      projectConfirmationStatus: {
-        type: String,
-        enum: [
-          projectConstants.projectStatus.underReview,
-          projectConstants.projectStatus.reviewSuccessfull,
-          projectConstants.projectStatus.projectConfirmed,
-          projectConstants.projectStatus.projectCancelled,
-        ],
-        default: projectConstants.projectStatus.underReview,
-      },
-      projectAssigned: {
-        type: Boolean,
-        default: false,
-      },
-      projectAssignee: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "employee",
-      },
-      location: {
-        type: Array,
-      },
-      projectCancelled: {
-        type: Boolean,
-      },
-      projectCompleted: {
-        type: Boolean,
       },
     },
+    projectCancelled: {
+      type: Boolean,
+    },
+    projectCompleted: {
+      type: Boolean,
+    },
   },
+
   {
     toJSON: {
       virtuals: true,
