@@ -28,6 +28,8 @@ export class UserSignUpInput {
   accountVerificationToken: string;
   @IsDateString()
   accountVerificationTokenExpires: Date;
+  @IsArray()
+  projects: object;
 }
 
 export class UserSignInInput {

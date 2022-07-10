@@ -2,7 +2,7 @@ import { User } from "../../../../models/user.model";
 
 export const getAllUsers = async () => {
   try {
-    const users = await User.find({}).lean();
+    const users = await User.find({}).populate("projects").lean();
 
     return {
       error: false,

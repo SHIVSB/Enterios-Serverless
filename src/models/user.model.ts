@@ -11,6 +11,7 @@ export type userDocument = mongoose.Document & {
   isAccountVerified: boolean;
   accountVerificationToken: string;
   accountVerificationTokenExpires: Date;
+  projects: Array<object>;
   comparePassword: comparePasswordFunction;
 };
 
@@ -50,6 +51,14 @@ const userSchema = new mongoose.Schema<userDocument>(
       default: "",
     },
     accountVerificationTokenExpires: Date,
+    projects: {
+      type: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "CustomerProject",
+        },
+      ],
+    },
   },
   {
     toJSON: {

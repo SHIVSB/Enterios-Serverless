@@ -21,7 +21,7 @@ const customerProjectSchema = new mongoose.Schema<customerProjectDocument>(
   {
     customerId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "user",
+      ref: "User",
       required: [true, "Customer Id is required || Login required"],
     },
     projectCity: {
@@ -66,7 +66,7 @@ const customerProjectSchema = new mongoose.Schema<customerProjectDocument>(
     },
     projectAssignee: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "employee",
+      ref: "Employee",
     },
     location: {
       latitude: {
