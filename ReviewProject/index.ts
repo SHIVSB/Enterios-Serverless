@@ -1,9 +1,6 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
-import { assignProject } from "../src/controllers/Admin/allProjects/assignProject/assignProject";
-import {
-  ProjectAssignmentInput,
-  TokenInput,
-} from "../src/types/validationInput";
+import { reviewProject } from "../src/controllers/Admin/allProjects/reviewProject/reviewProject";
+import { ProjectReviewInput, TokenInput } from "../src/types/validationInput";
 import { adminAuthentication } from "../src/utils/adminAuthentication";
 import { connect } from "../src/config/db.config";
 
@@ -31,8 +28,12 @@ const httpTrigger: AzureFunction = async function (
         };
         return;
       } else {
-        const body: ProjectAssignmentInput = req.body;
-        const project = await assignProject(body);
+        const body: ProjectReviewInput = req.body;
+
+        //add email functionality here so that customer
+        // can confirm the project details
+
+        const project = await reviewProject(body);
 
         if (project.error) {
           context.res = {

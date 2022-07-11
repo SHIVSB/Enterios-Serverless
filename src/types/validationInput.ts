@@ -193,3 +193,16 @@ export class ProjectAssignmentInput {
   @IsBoolean()
   projectAssigned: boolean;
 }
+
+export class ProjectReviewInput {
+  @IsNumber()
+  projectId: number;
+  @IsNumber()
+  projectArea: number;
+  @IsString()
+  projectType: string;
+  @IsNumber()
+  projectEstimate: number;
+  @IsString()
+  projectCity: string;
+}
