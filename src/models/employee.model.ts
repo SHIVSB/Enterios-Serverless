@@ -11,6 +11,7 @@ export type employeeDocument = mongoose.Document & {
   profilePhoto: string;
   bio: string;
   role: string;
+  currentProject: boolean;
   isAccountVerified: boolean;
   accountVerificationToken: string;
   accountVerificationTokenExpires: Date;
@@ -67,6 +68,10 @@ const employeeSchema = new mongoose.Schema<employeeDocument>(
     role: {
       type: String,
       default: "EMPLOYEE",
+    },
+    currentProject: {
+      type: Boolean,
+      default: false,
     },
     isAccountVerified: {
       type: Boolean,

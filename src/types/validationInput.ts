@@ -175,3 +175,21 @@ export class CustomerProjectInput {
   @IsString()
   projectType: string;
 }
+
+export class ProjectIdInput {
+  @IsString()
+  projectId: string;
+}
+
+export class ProjectAssignmentInput {
+  @IsString()
+  projectId: string;
+  @IsString()
+  assigneeId: string;
+  @IsString()
+  projectName: string;
+  @IsBoolean()
+  projectConfirmationStatus: boolean;
+  @IsBoolean()
+  projectAssigned: boolean;
+}
