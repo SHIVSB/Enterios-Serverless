@@ -206,3 +206,8 @@ export class ProjectReviewInput {
   @IsString()
   projectCity: string;
 }
+
+export class ProjectCancelInput {
+  @IsString()
+  projectId: string;
+}
