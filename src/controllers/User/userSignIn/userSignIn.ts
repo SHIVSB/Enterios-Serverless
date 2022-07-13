@@ -1,9 +1,15 @@
 import { User } from "../../../models/user.model";
 import { UserSignInInput } from "../../../types/validationInput";
 
-export const userSignIn = async (body: UserSignInInput) => {
+export const userSignIn = async (
+  body: UserSignInInput
+): Promise<{
+  error: boolean;
+  message: string;
+  profile?: any;
+}> => {
   try {
-    const user = User.findOne({ email: body.email });
+    const user = await User.findOne({ email: body.email });
 
     if (!user) {
       return {
@@ -12,7 +18,7 @@ export const userSignIn = async (body: UserSignInInput) => {
       };
     }
 
-    const passwordMatch = (await user).comparePassword(body.password);
+    const passwordMatch = await user.comparePassword(body.password);
 
     if (passwordMatch) {
       return {
