@@ -1,0 +1,327 @@
+openapi: 3.0.0
+info:
+  description: Backend server documantation for Enterios-Serverless
+  version: "1.0.0"
+  title: Enterios-Serverless
+servers:
+  - description: Dev Server
+    url: http://localhost:5000/
+  # - description: Prod Server
+  #   url: "yet to be published"
+
+paths:
+  /:
+    get:
+      tags:
+        - homepage
+      summary: Get homepage of website
+      responses:
+        "200":
+          description: homepage content
+          content:
+            application/json:
+              schema:
+                $ref: ""
+  /signup:
+    post:
+      tags:
+        - user/customer signup
+      summary: Create user/customer account
+      operationId: customerSignup
+      requestBody:
+        $ref: "#/components/requestBodies/createCustomerInput"
+      responses:
+        "200":
+          description: Customer added/created successfully
+        "400":
+          description: Invalid input/ Empty Body
+        "500":
+          description: Internal server error
+
+  /employeesignup:
+    post:
+      tags:
+        - Employee signup
+      summary: Create employee account
+      operationId: employeeSignup
+      requestBody:
+        $ref: "#/components/requestBodies/createEmployeeInput"
+      responses:
+        "200":
+          description: Employee added/created successfully
+        "400":
+          description: Invalid input/ Empty Body
+        "500":
+          description: Internal server error
+
+  /signin:
+    post:
+      tags:
+        - user/customer signin
+      summary: Sign into user/customer account
+      operationId: customerSignin
+      requestBody:
+        $ref: "#/components/requestBodies/customerSigninInput"
+      responses:
+        "200":
+          description: Customer logged in successfully
+        "400":
+          description: Invalid input/ Empty Body
+        "500":
+          description: Internal server error
+
+  /employeesignin:
+    post:
+      tags:
+        - Employee signin
+      summary: Sign into employee/admin account
+      operationId: employeeAdminSignin
+      requestBody:
+        $ref: "#/components/requestBodies/employeeSigninInput"
+      responses:
+        "200":
+          description: Employee logged in successfully
+        "400":
+          description: Invalid input/ Empty Body
+        "500":
+          description: Internal server error
+
+  /addcity:
+    post:
+      tags:
+        - add user/customer city
+      summary: add city of user/customer
+      operationId: customerAddCity
+      security:
+        - Bearer: []
+      requestBody:
+        $ref: "#/components/requestBodies/customerCityInput"
+      responses:
+        "200":
+          description: Customer city added successfully
+        "400":
+          description: Invalid input/ Empty Body
+        "500":
+          description: Internal server error
+  
+  /updateuser:
+    post:
+      tags:
+        - update user/customer properties
+      summary: update user properties
+      operationId: updateUser/Customer
+      security:
+        - Bearer: []
+      requestBody:
+        $ref: "#/components/requestBodies/customerUpdateInput"
+      responses:
+        "200":
+          description: Customer city added successfully
+        "400":
+          description: Invalid input/ Empty Body
+        "500":
+          description: Internal server error
+    
+  /updateemployee:
+    post:
+      tags:
+        - update employee properties
+      summary: update employee properties
+      operationId: updateEmployee
+      security:
+        - Bearer: []
+      requestBody:
+        $ref: "#/components/requestBodies/employeeUpdateInput"
+      responses:
+        "200":
+          description: Customer city added successfully
+        "400":
+          description: Invalid input/ Empty Body
+        "500":
+          description: Internal server error
+
+  /assignedprojects:
+    get:
+      tags:
+        - Fetch all assigned projects
+      summary: Fetches all assigned projects
+      security:
+        - Bearer: []
+      responses:
+        "200":
+          description: homepage content
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal Server Error
+
+components:
+  schemas:
+    createCustomerInput:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+
+    createEmployeeInput:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        phone:
+          type: number
+        city:
+          type: string
+        bio:
+          type: string
+
+    customerSigninInput:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+
+    customerCityInput:
+      type: object
+      properties:
+        city:
+          type: string
+
+    employeeSigninInput:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+
+    customerUpdateInput:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+
+    employeeUpdateInput:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        phone:
+          type: number
+        city:
+          type: string
+        profilePhoto:
+          type: string
+        bio:
+          type: string
+        linkedinProfile:
+          type: string
+
+
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: Bearer
+      bearerFormat: JWT
+
+  requestBodies:
+    createCustomerInput:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/createCustomerInput"
+        application/xml:
+          schema:
+            $ref: "#/components/schemas/createCustomerInput"
+      description: Customer sign up properties
+      required: true
+
+    customerSigninInput:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/customerSigninInput"
+        application/xml:
+          schema:
+            $ref: "#/components/schemas/customerSigninInput"
+      description: Customer sign in properties
+      required: true
+
+    customerCityInput:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/customerCityInput"
+        application/xml:
+          schema:
+            $ref: "#/components/schemas/customerCityInput"
+      description: Customer add city properties
+      required: true
+
+    createEmployeeInput:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/createEmployeeInput"
+        application/xml:
+          schema:
+            $ref: "#/components/schemas/createEmployeeInput"
+      description: Employee sign up properties
+      required: true
+
+    employeeSigninInput:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/employeeSigninInput"
+        application/xml:
+          schema:
+            $ref: "#/components/schemas/employeeSigninInput"
+      description: Employee sign in properties
+      required: true
+    
+    customerUpdateInput:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/customerUpdateInput"
+        application/xml:
+          schema:
+            $ref: "#/components/schemas/customerUpdateInput"
+      description: Customer update
+    
+    employeeUpdateInput:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/employeeUpdateInput"
+        application/xml:
+          schema:
+            $ref: "#/components/schemas/employeeUpdateInput"
+      description: Employee update

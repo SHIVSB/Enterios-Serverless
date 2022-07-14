@@ -16,7 +16,7 @@ export const updateUserProfile = async (body: UserUpdateInfo) => {
       );
     }
 
-    if (body.firstName) {
+    if (body.lastName) {
       await User.findByIdAndUpdate(
         body.id,
         {
