@@ -205,9 +205,24 @@ export class ProjectReviewInput {
   projectEstimate: number;
   @IsString()
   projectCity: string;
+  @IsString()
+  customerEmail: string;
 }
 
 export class ProjectCancelInput {
   @IsString()
   projectId: string;
+}
+
+export class EmailMessageInput {
+  @IsString()
+  from: string;
+  @IsString()
+  to: string;
+  @IsString()
+  message: string;
+  @IsString()
+  subject: string;
+  @IsString()
+  adminId: string;
 }
