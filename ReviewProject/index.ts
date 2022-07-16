@@ -48,7 +48,7 @@ const httpTrigger: AzureFunction = async function (
                                 <a href="http://localhost:7071/api/customerprojectconfirmation></a>`;
         const msg = {
           to: body.customerEmail, // Change to your recipient
-          from: "shivtechnica04@gmail.com", // Change to your verified sender
+          from: "shivtechnica02@gmail.com", // Change to your verified sender
           subject: "Confirm the project details.",
           html: confirmDetails
         };
@@ -72,6 +72,7 @@ const httpTrigger: AzureFunction = async function (
             status: 200,
             body: {
               message: project.message,
+              mailedMessage: confirmDetails
             },
           };
         }

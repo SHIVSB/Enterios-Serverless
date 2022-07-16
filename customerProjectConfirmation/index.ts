@@ -19,6 +19,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
                 }
 
                 if (user) {
+                    
                     context.res = {
                         Headers: HEADERS,
                         status: 200,
