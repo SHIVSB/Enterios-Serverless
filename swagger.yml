@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  description: Backend server documantation for Enterios-Serverless
+  description: Backend server docs for Enterios-Serverless
   version: "1.0.0"
   title: Enterios-Serverless
 servers:
@@ -10,18 +10,7 @@ servers:
   #   url: "yet to be published"
 
 paths:
-  /:
-    get:
-      tags:
-        - homepage
-      summary: Get homepage of website
-      responses:
-        "200":
-          description: homepage content
-          content:
-            application/json:
-              schema:
-                $ref: ""
+
   /signup:
     post:
       tags:
@@ -49,6 +38,22 @@ paths:
       responses:
         "200":
           description: Employee added/created successfully
+        "400":
+          description: Invalid input/ Empty Body
+        "500":
+          description: Internal server error
+
+  /adminsignup:
+    post:
+      tags:
+        - admin signup
+      summary: Create admin account
+      operationId: adminSignup
+      requestBody:
+        $ref: "#/components/requestBodies/adminSignupInput"
+      responses:
+        "200":
+          description: Admin added/created successfully
         "400":
           description: Invalid input/ Empty Body
         "500":
@@ -103,7 +108,25 @@ paths:
           description: Invalid input/ Empty Body
         "500":
           description: Internal server error
-  
+
+  /addcompletedproject:
+    post:
+      tags:
+        - add completed empoloyee project
+      summary: add previously completed projects of employee
+      operationId: addCompletedProject
+      security:
+        - Bearer: []
+      requestBody:
+        $ref: "#/components/requestBodies/completedProjectInput"
+      responses:
+        "200":
+          description: Employee project added successfully
+        "400":
+          description: Invalid input/ Empty Body
+        "500":
+          description: Internal server error
+
   /updateuser:
     post:
       tags:
@@ -121,7 +144,7 @@ paths:
           description: Invalid input/ Empty Body
         "500":
           description: Internal server error
-    
+
   /updateemployee:
     post:
       tags:
@@ -149,11 +172,80 @@ paths:
         - Bearer: []
       responses:
         "200":
-          description: homepage content
-        '400':
+          description: Assigned projects content
+        "400":
           description: Invalid input
-        '500':
+        "500":
           description: Internal Server Error
+
+  /getallcancelledprojects:
+    get:
+      tags:
+        - Fetches all cancelled projects
+      summary: Fetches all cancelled projects
+      security:
+        - Bearer: []
+      responses:
+        "200":
+          description: Cancelled projects content
+        "400":
+          description: Invalid input
+        "500":
+          description: Internal Server Error
+
+  /assignproject:
+    post:
+      tags:
+        - assign project
+      summary: assign project
+      operationId: assignProject
+      security:
+        - Bearer: []
+      requestBody:
+        $ref: "#/components/requestBodies/assignProjectInput"
+      responses:
+        "200":
+          description: Project assigned successfully
+        "400":
+          description: Invalid input/ Empty Body
+        "500":
+          description: Internal server error
+
+  /cancelproject:
+    post:
+      tags:
+        - cancel project
+      summary: cancel project
+      operationId: cancelProject
+      security:
+        - Bearer: []
+      requestBody:
+        $ref: "#/components/requestBodies/cancelProjectInput"
+      responses:
+        "200":
+          description: Project cancelled successfully
+        "400":
+          description: Invalid input/ Empty Body
+        "500":
+          description: Internal server error
+
+  /createnewproject:
+    post:
+      tags:
+        - create new project
+      summary: create new project
+      operationId: createNewProject
+      security:
+        - Bearer: []
+      requestBody:
+        $ref: "#/components/requestBodies/createProjectInput"
+      responses:
+        "200":
+          description: Project created successfully
+        "400":
+          description: Invalid input/ Empty Body
+        "500":
+          description: Internal server error
 
 components:
   schemas:
@@ -243,6 +335,61 @@ components:
         linkedinProfile:
           type: string
 
+    completedProjectInput:
+      type: object
+      properties:
+        projectName:
+          type: string
+        projectCity:
+          type: string
+        projectArea:
+          type: number
+        projectDuration:
+          type: number
+        projectEstimate:
+          type: number
+
+    adminSignupInput:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        city:
+          type: string
+        bio:
+          type: string
+
+    assignProjectInput:
+      type: object
+      properties:
+        projectId:
+          type: string
+        projectName:
+          type: string
+        assigneeId:
+          type: string
+
+    cancelProjectInput:
+      type: object
+      properties:
+        projectId:
+          type: string
+
+    createProjectInput:
+      type: object
+      properties:
+        projectCity:
+          type: string
+        projectArea:
+          type: string
+        projectType:
+          type: string
 
   securitySchemes:
     Bearer:
@@ -305,7 +452,7 @@ components:
             $ref: "#/components/schemas/employeeSigninInput"
       description: Employee sign in properties
       required: true
-    
+
     customerUpdateInput:
       content:
         application/json:
@@ -315,7 +462,7 @@ components:
           schema:
             $ref: "#/components/schemas/customerUpdateInput"
       description: Customer update
-    
+
     employeeUpdateInput:
       content:
         application/json:
@@ -325,3 +472,58 @@ components:
           schema:
             $ref: "#/components/schemas/employeeUpdateInput"
       description: Employee update
+
+    completedProjectInput:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/completedProjectInput"
+        application/xml:
+          schema:
+            $ref: "#/components/schemas/completedProjectInput"
+      description: Employee project update
+      reuired: true
+
+    adminSignupInput:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/adminSignupInput"
+        application/xml:
+          schema:
+            $ref: "#/components/schemas/adminSignupInput"
+      description: Admin account creation
+      required: true
+
+    assignProjectInput:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/assignProjectInput"
+        application/xml:
+          schema:
+            $ref: "#/components/schemas/assignProjectInput"
+      description: Assign project
+      required: true
+
+    cancelProjectInput:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/cancelProjectInput"
+        application/xml:
+          schema:
+            $ref: "#/components/schemas/cancelProjectInput"
+      description: Cancel project
+      required: true
+
+    createProjectInput:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/createProjectInput"
+        application/xml:
+          schema:
+            $ref: "#/components/schemas/createProjectInput"
+      description: Create project
+      required: true
