@@ -5,7 +5,7 @@ info:
   title: Enterios-Serverless
 servers:
   - description: Dev Server
-    url: http://localhost:5000/
+    url: http://localhost:7071/api/
   # - description: Prod Server
   #   url: "yet to be published"
 
@@ -192,6 +192,68 @@ paths:
           description: Invalid input
         "500":
           description: Internal Server Error
+  
+  /getallemployees:
+    get:
+      tags:
+        - Fetches all employees
+      summary: Fetches all employees
+      security:
+        - Bearer: []
+      responses:
+        "200":
+          description: Employees fetched successfully
+        "400":
+          description: Invalid input
+        "500":
+          description: Internal Server Error
+
+  /getallprojects:
+    get:
+      tags:
+        - Fetches all projects
+      summary: Fetches all projects
+      security:
+        - Bearer: []
+      responses:
+        "200":
+          description: Projects fetched successfully
+        "400":
+          description: Invalid input
+        "500":
+          description: Internal Server Error
+  
+  /getallusers:
+    get:
+      tags:
+        - Fetches all users
+      summary: Fetches all users
+      security:
+        - Bearer: []
+      responses:
+        "200":
+          description: Users fetched successfully
+        "400":
+          description: Invalid input
+        "500":
+          description: Internal Server Error
+
+  /getProjectById:
+    post:
+      tags:
+        - Fetches project by Id
+      summary: Fetches project by Id
+      security:
+        - Bearer: []
+      requestBody:
+        $ref: "#/components/requestBodies/projectId"
+      responses:
+        "200":
+          description: Project fetched successfully
+        "400":
+          description: Invalid input
+        "500":
+          description: Internal Server Error
 
   /assignproject:
     post:
@@ -242,6 +304,24 @@ paths:
       responses:
         "200":
           description: Project created successfully
+        "400":
+          description: Invalid input/ Empty Body
+        "500":
+          description: Internal server error
+
+  /reviewproject:
+    post:
+      tags:
+        - review project
+      summary: review project
+      operationId: reviewProject
+      security:
+        - Bearer: []
+      requestBody:
+        $ref: "#/components/requestBodies/reviewProjectInput"
+      responses:
+        "200":
+          description: Project review successfull
         "400":
           description: Invalid input/ Empty Body
         "500":
@@ -391,6 +471,28 @@ components:
         projectType:
           type: string
 
+    projectId:
+      type: object
+      properties:
+        projectId:
+          type: string
+    
+    reviewProjectInput:
+      type: object
+      properties:
+        customerEmail:
+          type: string
+        projectId:
+          type: string
+        projectCity:
+          type: string
+        projectArea:
+          type: string
+        projectType:
+          type: string
+        projectEstimate:
+          type: string
+
   securitySchemes:
     Bearer:
       type: http
@@ -526,4 +628,26 @@ components:
           schema:
             $ref: "#/components/schemas/createProjectInput"
       description: Create project
+      required: true
+
+    projectId:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/projectId"
+        application/xml:
+          schema:
+            $ref: "#/components/schemas/projectId"
+      description: Get project by id
+      required: true
+
+    reviewProjectInput:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/reviewProjectInput"
+        application/xml:
+          schema:
+            $ref: "#/components/schemas/reviewProjectInput"
+      description: Review project
       required: true
