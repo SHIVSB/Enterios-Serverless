@@ -14,7 +14,8 @@
     "bcryptjs": "^2.4.3",
     "class-validator": "^0.13.2",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.4.4"
+    "mongoose": "^6.4.4",
+    "node-rest-client": "^3.1.1"
   },
   "devDependencies": {
     "@azure/functions": "^3.0.0",
