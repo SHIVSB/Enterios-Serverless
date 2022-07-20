@@ -1,16 +1,85 @@
-import { AzureFunction, Context, HttpRequest } from "@azure/functions"
+import { AzureFunction, Context, HttpRequest } from "@azure/functions";
+import { connect } from "../src/config/db.config";
+import { userAuthentication } from "../src/utils/userAuthentication";
+import { TokenInput } from "../src/types/validationInput";
+import { TicketInput } from "../src/types/validationInput";
+import { createTicket } from "../src/controllers/Ticket/createTicket/createTicket";
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
-    context.log('HTTP trigger function processed a request.');
-    const name = (req.query.name || (req.body && req.body.name));
-    const responseMessage = name
-        ? "Hello, " + name + ". This HTTP triggered function executed successfully."
-        : "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.";
+    const HEADERS = { "Content-Type": "application/json" };
 
-    context.res = {
-        // status: 200, /* Defaults to 200 */
-        body: responseMessage
-    };
+    if (!req.body) {
+        context.res = {
+            Headers: HEADERS,
+            status: 400,
+            body: {
+                message: "Body content is empty!",
+            },
+        };
+
+        return;
+    }
+
+    connect();
+
+    try {
+        if (req.headers.authorization.startsWith("Bearer")) {
+            const token = req.headers.authorization.split(" ")[1];
+            const data: TokenInput = { token };
+            const result = await userAuthentication(data);
+
+            if (result.error) {
+                context.res = {
+                    Headers: HEADERS,
+                    status: 500,
+                    body: {
+                        message: result.message,
+                    },
+                };
+            } else {
+                const body: TicketInput = req.body;
+                body.reporter = result.message.id;
+
+                const newTicket = await createTicket(body);
+
+                if (newTicket) {
+                    context.res = {
+                        Headers: HEADERS,
+                        status: 500,
+                        body: {
+                            message: newTicket.message,
+                        },
+                    };
+                    return;
+                } else {
+                    context.res = {
+                        Headers: HEADERS,
+                        status: 200,
+                        body: {
+                            message: "New Ticket added/created successfully",
+                        },
+                    };
+                }
+            }
+
+        } else {
+            context.res = {
+                Headers: HEADERS,
+                status: 500,
+                body: {
+                    message: "No authorization token detected",
+                },
+            };
+        }
+    } catch (error) {
+        context.res = {
+            Headers: HEADERS,
+            status: 500,
+            body: JSON.stringify({
+                message: error.message,
+            }),
+        };
+    }
 
 };
 

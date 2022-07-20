@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-const ticketConstants = require("../constants/ticketConstants")
+import { ticketConstants } from "../constants/ticketConstants";
 
 export type ticketDocument = mongoose.Document & {
     title: string;

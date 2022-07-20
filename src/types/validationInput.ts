@@ -226,3 +226,17 @@ export class EmailMessageInput {
   @IsString()
   adminId: string;
 }
+
+export class TicketInput {
+  @IsString()
+  title: string;
+  @IsString()
+  description: string;
+  @IsNumber()
+  ticketPriority: number;
+  @IsString()
+  status: string;
+  @IsString()
+  reporter: string;
+}
+
