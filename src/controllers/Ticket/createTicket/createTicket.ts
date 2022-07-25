@@ -9,6 +9,11 @@ export const createTicket = async (body: TicketInput) => {
         ticket.description = body.description;
         ticket.reporter = body.reporter;
         ticket.save();
+
+        return {
+            error: false,
+            message: ticket.id
+        }
     } catch (error) {
         return {
             error: true,

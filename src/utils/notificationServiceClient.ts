@@ -5,7 +5,7 @@
  * 
  */
 
-const Client = require("node-rest-client");
+const {Client} = require("node-rest-client");
 
 const client = new Client();
 
@@ -19,13 +19,15 @@ exports.client = Client
  * and then make post call
  */
 
-module.exports = (ticketId, subject, content, emailIds, requester) => {
+import { AssignTicketInput } from "../types/validationInput";
+
+export const notificationServiceClient = (body: AssignTicketInput) => {
     const reqBody = {
-        subject: subject,
-        content: content,
-        recepientEmails: emailIds,
-        requester: requester,
-        ticketId: ticketId
+        subject: body.subject,
+        content: body.content,
+        recepientEmails: body.emailIds,
+        requester: body.requester,
+        ticketId: body.ticketId
     }
 
     const headers = {

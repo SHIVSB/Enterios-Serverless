@@ -1,9 +1,11 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
 import { connect } from "../src/config/db.config";
 import { userAuthentication } from "../src/utils/userAuthentication";
-import { TokenInput } from "../src/types/validationInput";
+import { AssignTicketInput, TokenInput } from "../src/types/validationInput";
 import { TicketInput } from "../src/types/validationInput";
 import { createTicket } from "../src/controllers/Ticket/createTicket/createTicket";
+import { assignTicket } from "../src/controllers/Ticket/assignTicket/assignTicket";
+import { Employee } from "../src/models/employee.model";
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
     const HEADERS = { "Content-Type": "application/json" };
@@ -42,7 +44,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
 
                 const newTicket = await createTicket(body);
 
-                if (newTicket) {
+                if (newTicket.error) {
                     context.res = {
                         Headers: HEADERS,
                         status: 500,
@@ -52,6 +54,20 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
                     };
                     return;
                 } else {
+
+                    const employee = await Employee.findById(req.body.assignee);
+
+                    const ticketData: AssignTicketInput = {
+
+                        subject: req.body.title,
+                        content: req.body.description,
+                        ticketId: newTicket.message.id,
+                        emailIds: employee._id,
+                        requester: body.reporter,
+                        assignee: req.body.assignee
+                    }
+
+                    assignTicket(ticketData);
                     context.res = {
                         Headers: HEADERS,
                         status: 200,

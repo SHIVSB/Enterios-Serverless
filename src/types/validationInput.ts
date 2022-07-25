@@ -238,5 +238,22 @@ export class TicketInput {
   status: string;
   @IsString()
   reporter: string;
+  @IsString()
+  assignee: string;
+}
+
+export class AssignTicketInput {
+  @IsString()
+  ticketId: string;
+  @IsString()
+  subject: string;
+  @IsString()
+  content: string;
+  @IsString()
+  emailIds: string;
+  @IsString()
+  requester: string;
+  @IsString()
+  assignee: string;
 }
 

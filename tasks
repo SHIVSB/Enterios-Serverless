@@ -1,3 +1,4 @@
 // 1. Create assign ticket functionality.
 // 2. Create assign priority functionality.
 // 3. Create Ticket resolved functionality
+// 4. Fetch particular user's projects to create ticket
